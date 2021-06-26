@@ -21,11 +21,67 @@
 
 // Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const { Schema, model } = require ('mongoose');
+// reaction schema: 
+// Reaction (SCHEMA ONLY)
 
-const ThoughtSChema = new Schema({
-    thoughtTex: {
+// reactionId
+
+// Use Mongoose's ObjectId data type
+// Default value is set to a new ObjectId
+// reactionBody
+
+// String
+// Required
+// 280 character maximum
+// username
+
+// String
+// Required
+// createdAt
+
+// Date
+// Set default value to the current timestamp
+// Use a getter method to format the timestamp on query
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const { Schema, model, Types } = require('mongoose');
+
+// reaction schema 
+const ReactionSchema = new Schema(
+    {
+        reactionID: {
+            type: Schema.Types.ObjectId,
+            default: () = new Types.ObjectId()
+        },
+        reactionBody: {
+            type: String,
+            required: true,
+            trim: true,
+            maxLength: 280
+        },
+        username: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: createdAtVal => dateFormat(createdAtVal)
+        }
+
+    },
+    {
+        toJson: {
+            getters: true
+        }
+    }
+);
+// thought schema 
+
+const ThoughtSchema = new Schema({
+    thoughtText: {
         type: String,
         required: true,
         trim: true,
@@ -35,24 +91,31 @@ const ThoughtSChema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: createdAtVal =>dateFormat(createdAtVal)
+        get: createdAtVal => dateFormat(createdAtVal)
     },
     username: {
-        type:string,
-        required:true,
-        trim:true
+        type: string,
+        required: true,
+        trim: true
     },
     reactions: [ReactionSchema]
 },
-{ 
-    toJSON: {
-        virtuals: true,
-        getters: true
-    },
-    id: false
-}
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
+        id: false
+    }
 );
 
-//create mdoel 
 
-module.exports = Thought; 
+//create model 
+
+ThoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+});
+
+const Thought = model('Thought', ThoughtSchema);
+
+module.exports = Thought;
