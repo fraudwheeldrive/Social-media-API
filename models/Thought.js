@@ -52,7 +52,7 @@ const ReactionSchema = new Schema(
     {
         reactionID: {
             type: Schema.Types.ObjectId,
-            default: () = new Types.ObjectId()
+            default: () => new Types.ObjectId()
         },
         reactionBody: {
             type: String,
@@ -94,7 +94,7 @@ const ThoughtSchema = new Schema({
         get: createdAtVal => dateFormat(createdAtVal)
     },
     username: {
-        type: string,
+        type: String,
         required: true,
         trim: true
     },
