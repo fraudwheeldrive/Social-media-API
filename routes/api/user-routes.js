@@ -27,10 +27,10 @@ router
 .put(updateUser)
 .delete(deleteUser);
 
-// router
-// .route('/:userId/friends/:FriendId')
-// .post(addFriend)
-// .delete(removeFriend);
+router
+.route('/:userId/friends/:FriendId')
+.post(addFriend)
+.delete(removeFriend);
 
 module.exports = router; 
 

@@ -14,12 +14,12 @@ const UserSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
-      match: [], //look into the mongo validation / regex
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, ' please use a valid email address'], //look into the mongo validation / regex
     },
     thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Though",
+        ref: "Thought",
       }
     ],
     friends: [
