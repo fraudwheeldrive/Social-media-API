@@ -64,9 +64,9 @@ updateUser({ params, body }, res) {
 },
 
 // delete user 
-DeleteUser({ params}, res) {
-    Pizza.findOneAndDelete({_id: params.id })
-    .then(dbPizzaData => res.json(dbPizzaData))
+deleteUser({ params}, res) {
+    User.findOneAndDelete({_id: params.id })
+    .then(dbUserData => res.json(dbUserData))
     .catch(err => res.json(err));
 }
 

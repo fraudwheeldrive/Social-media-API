@@ -1,10 +1,4 @@
 
-// /api/thoughts
-// get all 
-// get single by __id
-// post to create new thought -> push to associated users thoughts array Field
-// put to upde thought by __id
-// delete to remove a thought by its _id 
 
 const ThoughtSchema = require("../../models/Thought")
 
@@ -25,7 +19,7 @@ router
 .post(addThought)
 
 router
-route('/:thoughtID')
+.route('/:thoughtID')
 .get(getThoughtById)
 .put(updateThought)
 .delete(removeThought)
