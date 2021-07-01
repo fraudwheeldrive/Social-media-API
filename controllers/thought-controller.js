@@ -6,7 +6,7 @@ const thoughtController = {
 
 getAllThought(req,res) {
     Thought.find({})
-    .select('__v')
+    .select('-__v')
     .then(dbThoughtData => res.json(dbThoughtData))
     .catch(err => {
         console.log(err);
@@ -19,7 +19,7 @@ getAllThought(req,res) {
 // get one Thought by id 
 getThoughtById ({ params }, res) {
   Thought.findOne({ _id: params.thoughtId })
-  .select(-__v)
+  .select('-__v')
   .then(dbThoughtData => {
       if(!dbThoughtData) {
           res.status(404).json({ message: ' No Thought found with this id'});
